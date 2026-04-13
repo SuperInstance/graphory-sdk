@@ -30,6 +30,9 @@ dependencies = [
     "httpx>=0.24",
 ]
 
+[project.scripts]
+graphory = "graphory.cli:main"
+
 [project.urls]
 Homepage = "https://graphory.io"
 Repository = "https://github.com/groundstone-group/graphory-sdk"

@@ -72,6 +72,47 @@ class Graphory:
             timeout=timeout,
         )
 
+    @classmethod
+    def from_config(
+        cls,
+        config_path: Optional[str] = None,
+        timeout: float = 30.0,
+    ) -> "Graphory":
+        """Load credentials from ~/.graphory/config.json (written by `graphory login`).
+
+        Args:
+            config_path: Optional override path to a config JSON file.
+            timeout: Request timeout in seconds.
+
+        Returns:
+            A Graphory client configured from the saved credentials.
+
+        Raises:
+            GraphoryError: If the config file is missing or malformed.
+        """
+        import json
+        from pathlib import Path
+
+        path = Path(config_path) if config_path else Path.home() / ".graphory" / "config.json"
+        if not path.exists():
+            raise GraphoryError(
+                f"No Graphory config found at {path}. Run `graphory login` first."
+            )
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+        except (OSError, json.JSONDecodeError) as e:
+            raise GraphoryError(f"Failed to read {path}: {e}")
+
+        api_key = cfg.get("api_key")
+        org_id = cfg.get("org_id")
+        base_url = cfg.get("base_url", "https://api.graphory.io")
+        if not api_key or not org_id:
+            raise GraphoryError(
+                f"Config at {path} is missing api_key or org_id. Run `graphory login` again."
+            )
+        return cls(api_key=api_key, org_id=org_id, base_url=base_url, timeout=timeout)
+
     def _url(self, path: str) -> str:
         """Build org-scoped URL path."""
         return f"/org/{self.org_id}/{path}"
