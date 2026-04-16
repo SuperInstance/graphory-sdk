@@ -22,21 +22,21 @@ from graphory import Graphory
 g = Graphory(api_key="gs_ak_...", org_id="org_01...")
 
 # Search the graph
-results = g.search("Jacob Kriser")
+results = g.search("Alex Rivera")
 for r in results:
     print(f"{r['label']}: {r['name']}")
 
 # Get a specific entity with its edges
-entity = g.entity("contact:jacob@example.com")
+entity = g.entity("contact:alex.rivera@example.com")
 print(entity)
 
 # Multi-hop traversal
-paths = g.traverse("contact:jacob@example.com", depth=2, edge_types=["works_for", "sent"])
+paths = g.traverse("contact:alex.rivera@example.com", depth=2, edge_types=["works_for", "sent"])
 for p in paths["paths"]:
     print(f"{p['from_name']} --{p['edge_type']}--> {p['to_name']}")
 
 # Timeline of recent activity
-events = g.timeline(entity="groundstone-group", days=30)
+events = g.timeline(entity="acme-advisors", days=30)
 for e in events:
     print(f"{e['occurred_at']}: {e['name']}")
 
