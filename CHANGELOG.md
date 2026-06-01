@@ -5,7 +5,7 @@ All notable changes to the Graphory Python SDK are documented in this file.
 ## [Unreleased] - 2026-06-01 (third pass)
 
 ### Changed
-- Stripped advisor implementation details (`claude -p` subprocess, Claude Max subscription, Anthropic SDK framing) from README. Same class of leak as the prior WorkOS / FalkorDB vendor strip: cost-vs-pricing framing rephrased as outcomes ("zero inference costs in the data layer", "predictable pricing"), not architecture. The "How does this work with Claude Max?" FAQ entry was removed entirely.
+- README FAQ trimmed: removed an entry that exposed advisor-layer implementation details. Cost framing in the remaining FAQ is benefit-led ("zero inference cost", "predictable pricing"), not architecture.
 
 ## [Unreleased] - 2026-06-01
 
