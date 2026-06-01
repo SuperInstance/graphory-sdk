@@ -1,6 +1,10 @@
 # Graphory Python SDK
 
-Query your knowledge graph from Claude Code, Cursor, or any Python script.
+Python SDK + CLI for Graphory -- durable cognition for businesses and the AI that serves them.
+
+Query and write to your knowledge graph from Claude Code, Cursor, or any Python script.
+
+**Status:** pre-release / alpha (0.1.0). API is stable for the documented endpoints.
 
 ## Install
 
@@ -8,10 +12,33 @@ Query your knowledge graph from Claude Code, Cursor, or any Python script.
 pip install graphory
 ```
 
-Or install from source:
+Install from source:
 
 ```bash
-pip install -e ./sdk
+git clone https://github.com/groundstone-group/graphory-sdk.git
+cd graphory-sdk
+pip install -e .
+```
+
+## Two-step onboarding
+
+1. Sign up at https://graphory.io and create an API key.
+2. Run `graphory login` to save credentials to `~/.graphory/config.json` (chmod 600).
+
+```bash
+graphory login         # prompts for API key + org_id, validates against /stats
+graphory status        # shows current login + live node/edge counts
+graphory logout        # deletes the local config
+graphory --version
+```
+
+Once logged in, Python scripts can pick up credentials with no args:
+
+```python
+from graphory import Graphory
+
+g = Graphory.from_config()      # reads ~/.graphory/config.json
+print(g.stats())
 ```
 
 ## Quick Start
@@ -91,6 +118,10 @@ g = Graphory(
 
 Create a client instance.
 
+### `Graphory.from_config(config_path=None, timeout=30)`
+
+Load credentials from `~/.graphory/config.json` (written by `graphory login`).
+
 ### `g.search(query, limit=20, node_type=None, entity=None)`
 
 Search the graph. Returns list of matching node dicts.
@@ -152,3 +183,14 @@ try:
 except GraphoryError as e:
     print(f"Status {e.status_code}: {e.message}")
 ```
+
+## Links
+
+- Docs: https://docs.graphory.io
+- Marketing site: https://graphory.io
+- Issues: https://github.com/groundstone-group/graphory-sdk/issues
+- Changelog: https://github.com/groundstone-group/graphory-sdk/blob/main/CHANGELOG.md
+
+## License
+
+MIT. See [LICENSE](LICENSE).
