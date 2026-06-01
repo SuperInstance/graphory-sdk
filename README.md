@@ -1,196 +1,138 @@
-# Graphory Python SDK
+# Graphory
 
-Python SDK + CLI for Graphory -- durable cognition for businesses and the AI that serves them.
+**Graphory is the business memory layer for AI agents.**
 
-Query and write to your knowledge graph from Claude Code, Cursor, or any Python script.
-
-**Status:** pre-release / alpha (0.1.0). API is stable for the documented endpoints.
-
-## Install
+Connect your real operational data (email, calls, CRM, invoices) to a per-org knowledge graph that any AI client can query, write to, and reason over across sessions.
 
 ```bash
 pip install graphory
+graphory login
 ```
 
-Install from source:
+```python
+from graphory import Graphory
+g = Graphory.from_config()
+results = g.search("emails from Derek about the closing")
+```
+
+![PyPI](https://img.shields.io/pypi/v/graphory)
+![Python](https://img.shields.io/pypi/pyversions/graphory)
+![License](https://img.shields.io/pypi/l/graphory)
+![Downloads](https://img.shields.io/pypi/dm/graphory)
+
+## What is Graphory?
+
+Graphory is real business memory for AI agents. It ingests your operational data (Gmail, QuickBooks, Slack, CRMs, calls, invoices, files) into a typed, per-org knowledge graph. Any AI client can connect via MCP or HTTP, query across sources, and write findings back. Memory survives across sessions, models, and tools. One graph per org, isolated and yours.
+
+The SDK is open source and thin. The Graphory service behind it does the heavy lifting: a universal deterministic extractor, a master ontology accumulated across users, identity resolution, and temporal provenance on every node and edge. No LLM sits in the extraction pipeline, so the same input produces the same graph on every run at zero inference cost. Credentials stay yours (BYOC) and are stored encrypted per-org in WorkOS Vault.
+
+## Built for
+
+- **Hermes users** who hit the agent-memory churn problem on every long-running task
+- **OpenClaw users** who need durable operational data, not just chat transcripts
+- **Claude Code and Cursor developers** wiring AI into business systems over MCP
+- **Anyone building production AI workflows** that need real, queryable memory of the business
+
+Graphory works with Hermes, OpenClaw, Claude Code, Cursor, ChatGPT, and any MCP-capable client. One `gs_ak_` key, one MCP endpoint, every agent sees the same graph.
+
+## Quick start
 
 ```bash
-git clone https://github.com/groundstone-group/graphory-sdk.git
-cd graphory-sdk
-pip install -e .
+pip install graphory
+graphory login   # one-time auth, stores config at ~/.graphory/config.json
 ```
-
-## Two-step onboarding
-
-1. Sign up at https://graphory.io and create an API key.
-2. Run `graphory login` to save credentials to `~/.graphory/config.json` (chmod 600).
-
-```bash
-graphory login         # prompts for API key + org_id, validates against /stats
-graphory status        # shows current login + live node/edge counts
-graphory logout        # deletes the local config
-graphory --version
-```
-
-Once logged in, Python scripts can pick up credentials with no args:
 
 ```python
 from graphory import Graphory
 
-g = Graphory.from_config()      # reads ~/.graphory/config.json
-print(g.stats())
-```
+g = Graphory.from_config()
 
-## Quick Start
-
-```python
-from graphory import Graphory
-
-g = Graphory(api_key="gs_ak_...", org_id="org_01...")
-
-# Search the graph
-results = g.search("Alex Rivera")
-for r in results:
-    print(f"{r['label']}: {r['name']}")
-
-# Get a specific entity with its edges
-entity = g.entity("contact:alex.rivera@example.com")
-print(entity)
+# Search across the graph
+results = g.search("emails from Derek about the closing")
 
 # Multi-hop traversal
-paths = g.traverse("contact:alex.rivera@example.com", depth=2, edge_types=["works_for", "sent"])
-for p in paths["paths"]:
-    print(f"{p['from_name']} --{p['edge_type']}--> {p['to_name']}")
+paths = g.traverse("contact:derek@example.com", depth=2)
 
-# Timeline of recent activity
+# Timeline for an entity
 events = g.timeline(entity="acme-advisors", days=30)
-for e in events:
-    print(f"{e['occurred_at']}: {e['name']}")
 
-# Graph statistics
-stats = g.stats()
-print(f"Nodes: {stats['total_nodes']}, Edges: {stats['total_edges']}")
-
-# Write to the graph
+# Write a finding back to the graph
 g.write(
     action="upsert_node",
     label="Person",
     node_id="contact:new@example.com",
-    properties={"name": "New Contact", "email": "new@example.com"},
+    properties={"name": "New Contact"},
     confidence=0.95,
 )
-
-# Save a conversation (2-step)
-schema = g.conversation_schema()
-print(schema)  # shows the expected YAML frontmatter format
-
-g.save_conversation(data="""---
-title: Sales call with Acme Corp
-type: meeting
-company: acme-corp
-domain: operations
-who:
-  - met with John Smith
-  - discussed pricing
-date_published: 2026-04-06
----
-Discussed Q2 pricing. John wants a 10% discount on the annual plan.
-""")
 ```
 
-## Environment Variables
+## What you can build
 
-You can load credentials from environment variables:
+- **"When did I last talk to Derek?"** Single-hop traversal across calls, texts, emails, and meetings in one call. Returns the most recent activity with full source provenance.
+- **"What invoices haven't been paid 30+ days?"** Cross-source query over QuickBooks invoices and Gmail follow-ups. The graph already joins them on the customer entity.
+- **"Send a follow-up text to every customer who churned this quarter."** Read with Graphory, then act through your messaging tool of choice. The graph gives the list; your agent does the work.
 
-```python
-import os
-from graphory import Graphory
+## Architecture
 
-g = Graphory(
-    api_key=os.environ["GRAPHORY_API_KEY"],
-    org_id=os.environ["GRAPHORY_ORG_ID"],
-)
+```
+Your real data (Gmail, QuickBooks, Slack, CRM, calls)
+         |
+         v
+BYOC credentials in your WorkOS Vault (encrypted, per-org)
+         |
+         v
+Universal extractor (deterministic, no LLM in the pipeline)
+         |
+         v
+Per-org FalkorDB graph (typed nodes, edges, temporal provenance)
+         |
+         v
+Your AI client (Hermes, OpenClaw, Claude Code, Cursor, ChatGPT)
+   via MCP at api.graphory.io/mcp or HTTP at api.graphory.io
 ```
 
-## API Reference
+Seven generic node types (Business, Person, Organization, Activity, Asset, Account, Thread) cover any domain. Industry-specific facets live as properties, not as new types. Every node and edge carries source, confidence, authority, and timestamp.
 
-### `Graphory(api_key, org_id, base_url="https://api.graphory.io", timeout=30)`
+## API surface
 
-Create a client instance.
+**HTTP endpoints** (api.graphory.io):
+- `POST /search` keyword search across the org graph
+- `GET /entity/{id}` full entity with 1-hop neighborhood
+- `POST /traverse` multi-hop traversal
+- `GET /timeline/{entity}` temporal activity feed
+- `POST /write` confidence-gated node and edge writes
+- `GET /stats` node and edge counts by type
+- `POST /ingest` universal webhook ingestion
 
-### `Graphory.from_config(config_path=None, timeout=30)`
+**MCP tools** (api.graphory.io/mcp): 49 total. 24 read tools, 21 write tools, 4 review tools. See https://docs.graphory.io/mcp for the full list.
 
-Load credentials from `~/.graphory/config.json` (written by `graphory login`).
+**Authentication:** `gs_ak_` API keys, one per org. Use the same key from HTTP, MCP, and the Python SDK.
 
-### `g.search(query, limit=20, node_type=None, entity=None)`
+Full reference: https://docs.graphory.io/api
 
-Search the graph. Returns list of matching node dicts.
+## How it compares
 
-### `g.entity(entity_id)`
+**Is Graphory like Mem0?**
+Not really. Mem0 stores chat facts in vectors and key-value pairs. Graphory stores business entities (people, companies, invoices, threads, deals) in a typed graph with temporal provenance. Different shape, different use case.
 
-Get a node and its 1-hop neighborhood.
+**Is Graphory like Zep?**
+Zep is an enterprise chat-context lake. Graphory is for operational data (real emails, real invoices, real calls) joined into one graph per org. You can push chat into Graphory too, but the primary input is the business itself.
 
-### `g.traverse(start_id, depth=2, edge_types=None)`
+**Why no LLM in the extraction pipeline?**
+Deterministic extraction is replay-safe, auditable, and free. The same `.md` file produces the same graph on every run. AI is bounded to a soft advisor layer where corrections feed extraction rules over time. The core is hard logic, not vibes.
 
-Multi-hop graph traversal. Returns paths with from/to node info and edge types.
-
-### `g.timeline(entity=None, days=30, limit=50)`
-
-Recent activities sorted by date.
-
-### `g.stats()`
-
-Node and edge counts by type.
-
-### `g.connections()`
-
-List active data source connections.
-
-### `g.write(action, label=None, node_id=None, properties=None, from_id=None, to_id=None, edge_type=None, confidence=0.95, evidence=None)`
-
-Write nodes or edges with confidence gating.
-
-### `g.conversation_schema()`
-
-Get the YAML frontmatter format for saving conversations (Step 1).
-
-### `g.save_conversation(data)`
-
-Save structured conversation data as .md with YAML frontmatter (Step 2).
-
-### `g.usage()`
-
-Get current node count, plan limits, and usage percentage.
-
-### `g.close()`
-
-Close the HTTP client. Also works as a context manager:
-
-```python
-with Graphory(api_key="...", org_id="...") as g:
-    results = g.search("test")
-```
-
-## Error Handling
-
-```python
-from graphory import Graphory, GraphoryError
-
-g = Graphory(api_key="gs_ak_...", org_id="org_01...")
-
-try:
-    results = g.search("test")
-except GraphoryError as e:
-    print(f"Status {e.status_code}: {e.message}")
-```
+**How does this work with Claude Max?**
+The advisor layer that proposes new rules runs as a `claude -p` subprocess against your Claude subscription. No Anthropic API tokens are required on the Graphory side. The user-facing MCP server is plain HTTP with a `gs_ak_` key.
 
 ## Links
 
+- Homepage: https://graphory.io
 - Docs: https://docs.graphory.io
-- Marketing site: https://graphory.io
+- MCP guide: https://docs.graphory.io/mcp
+- Benchmarks: https://docs.graphory.io/benchmarks
 - Issues: https://github.com/groundstone-group/graphory-sdk/issues
-- Changelog: https://github.com/groundstone-group/graphory-sdk/blob/main/CHANGELOG.md
+- PyPI: https://pypi.org/project/graphory/
 
-## License
+## License and status
 
-MIT. See [LICENSE](LICENSE).
+MIT licensed. Beta status (semver from 0.1.0). API surface is stable; minor changes during the beta will be documented in `CHANGELOG.md`. Open an issue if something breaks.

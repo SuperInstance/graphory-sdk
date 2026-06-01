@@ -5,17 +5,32 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "graphory"
 version = "0.1.0"
-description = "Python SDK for the Graphory Knowledge Graph API"
+description = "Business memory layer for AI agents. Python client and CLI for the Graphory graph-native data infrastructure (api.graphory.io)."
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.9"
 authors = [
     {name = "Groundstone Group", email = "hello@graphory.io"},
 ]
-keywords = ["graph", "knowledge-graph", "mcp", "ai", "business-intelligence", "data-layer"]
+keywords = [
+    "graph",
+    "knowledge-graph",
+    "mcp",
+    "ai-memory",
+    "agent-memory",
+    "business-memory",
+    "graphrag",
+    "claude-code",
+    "hermes",
+    "openclaw",
+    "mem0-alternative",
+    "data-layer",
+    "byoc",
+]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -25,6 +40,7 @@ classifiers = [
     "Topic :: Database",
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
     "httpx>=0.24",

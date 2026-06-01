@@ -2,6 +2,16 @@
 
 All notable changes to the Graphory Python SDK are documented in this file.
 
+## [Unreleased] - 2026-06-01
+
+### Changed
+- README rewritten with full positioning (hero, what-is, built-for, architecture, FAQ, links).
+- `pyproject.toml` description and keywords expanded for SEO and AEO discoverability.
+- Development status moved from Alpha to Beta.
+
+### Added
+- `llms.txt` at repository root for LLM and AEO crawlers (Claude, ChatGPT, Perplexity).
+
 ## [0.1.0] - 2026-04-12
 
 Initial public release.

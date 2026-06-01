@@ -1,0 +1,32 @@
+# Graphory SDK
+
+> Python SDK and CLI for Graphory, the business memory layer for AI agents. Connect real operational data (email, calls, CRM, invoices) to a per-org knowledge graph any AI client can query and write to across sessions.
+
+Graphory is a graph-native data infrastructure layer. The SDK in this repository is a thin Python client over the public HTTP and MCP APIs at api.graphory.io. The extractors, ontology, and identity-resolution layers are in the proprietary Graphory service; this SDK is open source and MIT-licensed.
+
+The extraction pipeline is deterministic with no LLM in the loop, so the same input produces the same graph on every run at zero inference cost. Credentials stay with the user (BYOC) and are stored encrypted per-org in WorkOS Vault. One `gs_ak_` API key works across the Python SDK, the HTTP API, and the MCP server.
+
+## Core docs
+
+- [Homepage](https://graphory.io): product overview, positioning, pricing
+- [Documentation](https://docs.graphory.io): full developer docs
+- [API reference](https://docs.graphory.io/api): HTTP endpoints (search, traverse, timeline, write, stats, ingest)
+- [MCP guide](https://docs.graphory.io/mcp): 49 MCP tools for AI clients
+- [Benchmarks](https://docs.graphory.io/benchmarks): external benchmark results (Magellan, BizLineItemBench, WDC Products, LongMemEval)
+
+## SDK pages
+
+- [Quickstart](https://github.com/groundstone-group/graphory-sdk/blob/main/README.md): install, login, first query
+- [Changelog](https://github.com/groundstone-group/graphory-sdk/blob/main/CHANGELOG.md): version history
+- [PyPI listing](https://pypi.org/project/graphory/): pip install graphory
+- [Issues](https://github.com/groundstone-group/graphory-sdk/issues): bug reports and feature requests
+
+## Compared to
+
+- [mem0](https://github.com/mem0ai/mem0): vector and key-value chat memory. Graphory stores typed business entities in a graph with temporal provenance.
+- [Zep](https://github.com/getzep/zep): enterprise chat-context lake. Graphory ingests operational data (real emails, invoices, calls) and isolates per-org.
+- [Cognee](https://github.com/topoteretes/cognee): LLM-built graph from conversation. Graphory's extraction is deterministic; AI is bounded to a soft advisor layer.
+
+## Audience
+
+Hermes users, OpenClaw users, Claude Code and Cursor developers, and anyone wiring AI agents into real business systems. The common pain is agent forgetfulness; the common need is durable, queryable memory of the business itself.
