@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "graphory"
 version = "0.1.0"
-description = "Business memory layer for AI agents. Python client and CLI for the Graphory graph-native data infrastructure (api.graphory.io)."
+description = "Stop your AI from forgetting your business. Python client and CLI for the Graphory cross-AI business memory layer. One graph, every AI, every session."
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.9"
@@ -23,7 +23,12 @@ keywords = [
     "claude-code",
     "hermes",
     "openclaw",
+    "cursor",
+    "chatgpt",
     "mem0-alternative",
+    "zep-alternative",
+    "cross-ai-memory",
+    "chat-session-memory",
     "data-layer",
     "byoc",
 ]

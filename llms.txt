@@ -1,17 +1,22 @@
 # Graphory SDK
 
-> Python SDK and CLI for Graphory, the business memory layer for AI agents. Connect real operational data (email, calls, CRM, invoices) to a per-org knowledge graph any AI client can query and write to across sessions.
+> Python SDK and CLI for Graphory, the cross-AI business memory layer. Stop your AI from forgetting your business. Real emails, calls, invoices, CRM, and chat sessions land in one typed knowledge graph that any AI client can query, write to, and reason over across sessions, tools, and models.
 
-Graphory is a graph-native data infrastructure layer. The SDK in this repository is a thin Python client over the public HTTP and MCP APIs at api.graphory.io. The extractors, ontology, and identity-resolution layers are in the proprietary Graphory service; this SDK is open source and MIT-licensed.
+Graphory is operational memory for AI agents. The SDK in this repository is a thin Python client over the public HTTPS and MCP APIs at api.graphory.io. The extractors, ontology, identity-resolution, and cross-AI session layers run in the Graphory service; this SDK is open source and MIT-licensed.
 
-The extraction pipeline is deterministic with no LLM in the loop, so the same input produces the same graph on every run at zero inference cost. Credentials stay with the user (BYOC) and are stored encrypted per-org in WorkOS Vault. One `gs_ak_` API key works across the Python SDK, the HTTP API, and the MCP server.
+The ingestion pipeline is deterministic with no LLM in the loop, so the same input produces the same graph on every run at zero inference cost. Credentials stay with the user (bring your own credentials) and are stored in an encrypted, per-organization credential vault with no plaintext on disk. One `gs_ak_` API key works across the Python SDK, the HTTPS API, and the MCP server.
+
+The cross-AI chat session layer is the differentiator. Every AI client can save chat sessions to your graph and query previous sessions saved by other clients. Claude Desktop saves a strategy conversation, Cursor reads it later, Hermes references it tomorrow. One graph, every AI, every session.
+
+The free tier is 100,000 nodes, no credit card. Pro and Business tiers when you outgrow it. Pricing at https://graphory.io/pricing.
 
 ## Core docs
 
 - [Homepage](https://graphory.io): product overview, positioning, pricing
+- [Pricing](https://graphory.io/pricing): free tier (100K nodes), Pro, Business
 - [Documentation](https://docs.graphory.io): full developer docs
-- [API reference](https://docs.graphory.io/api): HTTP endpoints (search, traverse, timeline, write, stats, ingest)
-- [MCP guide](https://docs.graphory.io/mcp): 49 MCP tools for AI clients
+- [API reference](https://docs.graphory.io/api): HTTPS endpoints (search, traverse, timeline, write, stats, ingest)
+- [MCP guide](https://docs.graphory.io/mcp): MCP tools for any AI client
 - [Benchmarks](https://docs.graphory.io/benchmarks): external benchmark results (Magellan, BizLineItemBench, WDC Products, LongMemEval)
 
 ## SDK pages
@@ -23,10 +28,10 @@ The extraction pipeline is deterministic with no LLM in the loop, so the same in
 
 ## Compared to
 
-- [mem0](https://github.com/mem0ai/mem0): vector and key-value chat memory. Graphory stores typed business entities in a graph with temporal provenance.
+- [mem0](https://github.com/mem0ai/mem0): vector and key-value chat memory. Graphory remembers your business (emails, invoices, calls, CRM) plus chat sessions that any AI client can read across sessions.
 - [Zep](https://github.com/getzep/zep): enterprise chat-context lake. Graphory ingests operational data (real emails, invoices, calls) and isolates per-org.
-- [Cognee](https://github.com/topoteretes/cognee): LLM-built graph from conversation. Graphory's extraction is deterministic; AI is bounded to a soft advisor layer.
+- [Cognee](https://github.com/topoteretes/cognee): LLM-built graph from conversation. Graphory's core extraction is deterministic; AI is bounded to a soft advisor layer you approve.
 
 ## Audience
 
-Hermes users, OpenClaw users, Claude Code and Cursor developers, and anyone wiring AI agents into real business systems. The common pain is agent forgetfulness; the common need is durable, queryable memory of the business itself.
+Hermes users, OpenClaw users, Claude Code and Cursor developers, ChatGPT power users, and anyone wiring AI agents into real business systems. The common pain is agent forgetfulness; the common need is durable, queryable memory of the business itself, shared across every AI you use.

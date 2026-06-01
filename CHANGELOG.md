@@ -5,6 +5,19 @@ All notable changes to the Graphory Python SDK are documented in this file.
 ## [Unreleased] - 2026-06-01
 
 ### Changed
+- README rewritten (second pass) with bolder positioning ("Stop your AI from forgetting your business"), free-tier callout, and the cross-AI chat session memory differentiator promoted to a first-class feature.
+- All customer-facing vendor names stripped from README, llms.txt, and pyproject description. Replaced with benefit language ("encrypted credential vault", "per-org isolated knowledge graph") so the public surface no longer reveals which auth provider or graph database backs the service.
+- `pyproject.toml` description rewritten to lead with the value prop, not the implementation.
+- llms.txt updated with the cross-AI session memory angle, free-tier mention, and stripped vendor names.
+
+### Added
+- Cross-AI chat session memory framing in README ("save_conversation across clients", "one graph, every AI, every session") backed by the shipped `save_conversation` MCP tool and `POST /org/{id}/conversation` API endpoint.
+- Free-tier section in the README (100K nodes, no credit card).
+- New keywords: `cursor`, `chatgpt`, `zep-alternative`, `cross-ai-memory`, `chat-session-memory`.
+
+## [Unreleased] - 2026-06-01 (first pass)
+
+### Changed
 - README rewritten with full positioning (hero, what-is, built-for, architecture, FAQ, links).
 - `pyproject.toml` description and keywords expanded for SEO and AEO discoverability.
 - Development status moved from Alpha to Beta.
