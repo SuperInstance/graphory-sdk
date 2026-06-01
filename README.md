@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/groundstone-group/graphory-sdk/main/assets/logo.webp" alt="Graphory" width="200" />
+</p>
+
 # Graphory
 
 **Stop your AI from forgetting your business.**

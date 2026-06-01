@@ -2,6 +2,11 @@
 
 All notable changes to the Graphory Python SDK are documented in this file.
 
+## [Unreleased] - 2026-06-01 (fifth pass)
+
+### Added
+- Graphory logo added to the top of the README, centered above the H1, at 200px width. The logo file lives at `assets/logo.webp` in the SDK repo. The README references it via an absolute `raw.githubusercontent.com` URL so the image renders on both GitHub and PyPI (relative paths would break on PyPI's long-description renderer).
+
 ## [Unreleased] - 2026-06-01 (fourth pass)
 
 ### Changed
