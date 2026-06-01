@@ -141,9 +141,6 @@ Three reasons: zero inference cost, replay-safe (same input equals same output, 
 **How does memory work across my different AI clients?**
 Every AI client can save chat sessions to your graph and query previous sessions saved by other clients. Claude Desktop saves a strategy conversation, Cursor reads it later, Hermes references it tomorrow. One graph, every AI, every session. This is the killer feature no chat-bound memory product can match.
 
-**How does this work with Claude Max?**
-The advisor layer runs as a `claude -p` subprocess against your Claude subscription. No Anthropic API tokens required on the Graphory side. The user-facing MCP server is plain HTTPS with a `gs_ak_` key.
-
 ## Links
 
 - Homepage: [graphory.io](https://graphory.io)
