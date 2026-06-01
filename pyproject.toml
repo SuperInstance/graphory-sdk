@@ -1,5 +1,8 @@
 [build-system]
-requires = ["setuptools>=64", "wheel"]
+# Pinned <77 because setuptools 77+ emits PEP 639 license-expression / license-files
+# fields that twine 6.2 rejects as unrecognized. Bump these together when the
+# tooling catches up.
+requires = ["setuptools>=64,<77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
