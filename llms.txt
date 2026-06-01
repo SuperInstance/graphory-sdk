@@ -32,6 +32,12 @@ The free tier is 100,000 nodes, no credit card. Pro and Business tiers when you 
 - [Zep](https://github.com/getzep/zep): enterprise chat-context lake. Graphory ingests operational data (real emails, invoices, calls) and isolates per-org.
 - [Cognee](https://github.com/topoteretes/cognee): LLM-built graph from conversation. Graphory's core extraction is deterministic; AI is bounded to a soft advisor layer you approve.
 
+The audience spans every business stage and type: AI developers debugging agents across sessions, indie founders pre-revenue tracking outreach, consultants juggling 12 clients, portfolio managers crossing companies, operations teams reconstructing vendor history, researchers building citation memory.
+
 ## Audience
 
-Hermes users, OpenClaw users, Claude Code and Cursor developers, ChatGPT power users, and anyone wiring AI agents into real business systems. The common pain is agent forgetfulness; the common need is durable, queryable memory of the business itself, shared across every AI you use.
+AI developers building agents, indie founders and solo operators, consultants and agencies, asset managers and portfolio owners, operations and established businesses, researchers and domain experts, and power users of Claude Code, Cursor, ChatGPT, Hermes, and OpenClaw. The common pain is agent forgetfulness and starting from zero in every new session; the common need is durable, queryable memory of the business itself (every conversation, every transaction, every document, every chat session) shared across every AI you use.
+
+## Visual model
+
+Picture a central node (you or your business) with orbiting data sources: email threads, calls and texts, calendar, CRM activity, documents and files, invoices and payments, code commits and PRs, AI chat sessions. Graphory is the graph that ties them together. Any AI client reads and writes the same graph through one `gs_ak_` API key.

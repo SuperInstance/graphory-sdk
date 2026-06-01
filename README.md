@@ -12,7 +12,7 @@ graphory login
 ```python
 from graphory import Graphory
 g = Graphory.from_config()
-results = g.search("emails from Derek about the closing")
+results = g.search("what have we discussed about pricing this quarter")
 ```
 
 ![PyPI](https://img.shields.io/pypi/v/graphory)
@@ -22,11 +22,13 @@ results = g.search("emails from Derek about the closing")
 
 ## Built for
 
-- **Hermes users** who hit the agent-memory churn problem on every long-running task
-- **OpenClaw users** who need durable operational data, not just chat transcripts
-- **Claude Code and Cursor developers** wiring AI into business systems over MCP
-- **ChatGPT power users** tired of starting from scratch in every new thread
-- **Anyone building production AI workflows** over real business data
+- **AI developers** wiring agents and tired of losing context every session
+- **Indie founders and solo operators** who want their AI to remember every conversation and follow-up
+- **Consultants and agencies** managing client knowledge across projects, calls, and contracts
+- **Asset managers and portfolio owners** running multiple companies on one memory
+- **Operations and established businesses** that need durable vendor, customer, and compliance history
+- **Researchers and domain experts** building citation memory and source tracking
+- **Claude Code, Cursor, ChatGPT, Hermes, and OpenClaw users** sharing one memory across every AI
 
 One API key. One MCP endpoint. Every agent sees the same graph.
 
@@ -36,20 +38,88 @@ Graphory is real business memory for AI agents. It ingests your operational data
 
 The differentiators:
 
-- **Operational data, not just chat.** Real emails, real invoices, real call logs, real CRM records, joined on real entities (people, companies, deals, threads).
-- **Cross-AI memory.** Every AI client can save chat sessions to your graph and query previous sessions saved by other clients. Claude Desktop saves a strategy thread, Cursor reads it the next day, Hermes references it the week after. One graph, every AI, every session.
-- **Per-organization isolation.** Your data lives in its own graph. Nothing crosses orgs, ever.
+- **Operational data, not just chat.** Real emails, invoices, call logs, and CRM records, joined on real entities (people, companies, accounts, threads).
+- **Cross-AI memory.** Every AI client can save chat sessions to your graph and read sessions saved by other clients. Claude Desktop saves a strategy thread, Cursor reads it the next day, Hermes references it the week after.
+- **Per-organization isolation.** Your data lives in its own graph. Nothing crosses orgs.
 - **Encrypted credential vault.** No plaintext on disk. Tokens stay yours (bring your own credentials).
-- **Deterministic extraction.** No LLM in the ingestion pipeline. Same input produces the same graph on every run. Zero inference cost, zero drift, zero hallucinated invoices.
+- **Deterministic extraction.** No LLM in the ingestion pipeline. Same input, same graph, every run. Zero inference cost, zero drift, zero hallucinated invoices.
 - **Temporal provenance.** Every node and edge carries source, confidence, authority, and timestamp. Full audit trail.
 
-The SDK is open source and thin. The Graphory service behind it does the heavy lifting: a universal extractor, a master ontology that accumulates across users, identity resolution, and the cross-AI session layer.
+The SDK is thin and open source. The Graphory service behind it does the heavy lifting: a universal extractor, a master ontology that accumulates across users, identity resolution, and the cross-AI session layer.
 
 ## What you can build
 
-- **"When did I last hear from Derek?"** One hop across calls, texts, emails, and meetings. Returns the actual thread with full source provenance.
-- **"Which invoices have been outstanding 30+ days?"** Cross-source AR query over accounting and inbox follow-ups, joined on the customer entity automatically.
-- **"What did my last AI session decide about the Smith deal?"** Pulls the prior chat session (saved by whatever AI client you used), including decisions, action items, and the linked threads it referenced.
+You walked into the meeting and needed to remember:
+
+- The last three emails from this person
+- That call two weeks ago
+- The invoice question from January
+- What you told ChatGPT yesterday about the strategy
+
+You should not have to remember any of it. Your AI should.
+
+Every AI tool starts from zero. Every new session is amnesia. Stop telling every AI the same backstory.
+
+Graphory is your business memory. One graph. Every conversation, every transaction, every document, every chat session. Any AI can read it. Any AI can write to it. Across sessions, tools, and models.
+
+```mermaid
+graph LR
+    YOU(("You / Your Business"))
+    EMAIL[Email threads]
+    CALLS[Calls and texts]
+    CAL[Calendar]
+    CRM[CRM activity]
+    DOCS[Documents and files]
+    MONEY[Invoices and payments]
+    CODE[Code commits and PRs]
+    CHATS[AI chat sessions]
+
+    YOU --- EMAIL
+    YOU --- CALLS
+    YOU --- CAL
+    YOU --- CRM
+    YOU --- DOCS
+    YOU --- MONEY
+    YOU --- CODE
+    YOU --- CHATS
+```
+
+<details>
+<summary>ASCII fallback if Mermaid does not render</summary>
+
+```
+        Email threads     Calls and texts
+                \\           /
+   Calendar -----  You / Your Business  ----- CRM activity
+                /           \\
+    Documents and files       Invoices and payments
+                /             \\
+   Code commits and PRs       AI chat sessions
+```
+
+</details>
+
+Every line above is a real connection in your graph. Click around in your AI client and any edge can become the answer.
+
+### Picture yourself here
+
+**You are building an AI product.**
+You ran a Claude session last week debugging an agent. Today you are in Cursor on the same agent. Yesterday you asked ChatGPT about a related bug. Ask any of them: "What conversations have I had about the failure in the identity resolver?" One answer, drawn from all three sessions.
+
+**You are an indie founder, pre-revenue.**
+You emailed 30 potential customers last month. You called five. One introduced you to a colleague. Two went dark. Ask your AI: "Who responded positively, and who hasn't replied in 14 days?" The answer is your follow-up list, ranked by real activity.
+
+**You are a consultant managing 12 clients.**
+Every client has emails, documents, calls, maybe invoices. Ask your AI: "What did I tell ClientA about scope changes last quarter?" The answer cites the specific email, the specific meeting, the specific contract version.
+
+**You manage a portfolio of companies.**
+Three operating businesses, each with their own bookkeeper, vendors, customers. Ask your AI: "Which customer hasn't paid us in any company for 60+ days?" The answer crosses every connected source.
+
+**You run operations for an established business.**
+You need to reconstruct a vendor relationship from two years ago. Ask your AI: "Pull everything about the SupplyCo relationship: emails, calls, invoices, contracts." The answer is a complete timeline, in order, with sources.
+
+**You are a researcher.**
+Every paper you read, every source you cite, every conversation with a colleague. Ask your AI: "What did Dr. M say about the protein folding question, and what papers did I cite alongside it?" Real recall over your actual knowledge work.
 
 ## Architecture
 
@@ -89,13 +159,13 @@ from graphory import Graphory
 g = Graphory.from_config()
 
 # Search across the graph
-results = g.search("emails from Derek about the closing")
+results = g.search("what have we discussed about pricing this quarter")
 
 # Multi-hop traversal
-paths = g.traverse("contact:derek@example.com", depth=2)
+paths = g.traverse("contact:client@example.com", depth=2)
 
 # Timeline for an entity
-events = g.timeline(entity="acme-advisors", days=30)
+events = g.timeline(entity="acme-co", days=30)
 
 # Write a finding back to the graph
 g.write(
@@ -127,10 +197,10 @@ Full reference: [docs.graphory.io/api](https://docs.graphory.io/api).
 ## How it compares
 
 **Is Graphory like Mem0?**
-Mem0 remembers chat. Graphory remembers your business: emails, invoices, calls, CRM activity, plus chat sessions. When you ask "when did I last hear from Derek about pricing," the answer is the actual email thread, not a paraphrased note.
+Mem0 remembers chat. Graphory remembers your business: emails, invoices, calls, CRM activity, plus chat sessions. When you ask "what did we tell that customer last quarter," the answer is the actual email thread, not a paraphrased note.
 
 **Is Graphory like Zep?**
-Zep is an enterprise chat-context lake. Graphory is operational memory: real business activity tied to real people, real companies, real deals. Different input, different output.
+Zep is an enterprise chat-context lake. Graphory is operational memory: real business activity tied to real people, real companies, real engagements. Different input, different output.
 
 **Is Graphory like Cognee?**
 Cognee builds graphs from conversation with LLMs writing into the graph as they go, which drifts over time. Graphory's core extraction is deterministic: same input, same graph, every run. The AI advisor layer is bounded to suggestions you approve, not core writes.

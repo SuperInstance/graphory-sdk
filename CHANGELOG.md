@@ -2,6 +2,20 @@
 
 All notable changes to the Graphory Python SDK are documented in this file.
 
+## [Unreleased] - 2026-06-01 (fourth pass)
+
+### Changed
+- "What you can build" section rewritten with pain-first, reader-led intro ("You should not have to remember any of it. Your AI should.") and direct "you" address throughout.
+- Use cases broadened from deal-focused examples to six scenarios spanning AI developers, indie founders, consultants, portfolio managers, operations, and researchers. Each is a concrete role the reader can put themselves in, a natural-language question, and the cited outcome.
+- "Built for" audience reordered and broadened to lead with AI developers and indie founders, then consultants, asset managers, operations, and researchers. AI client power users (Claude Code, Cursor, ChatGPT, Hermes, OpenClaw) moved to a cross-cutting line.
+- Quick start search example rebalanced from a name-specific deal query to a universal pricing-history query.
+- "Operational data" differentiator updated to use "accounts" instead of "deals" in the entity list.
+- Mem0 and Zep comparison entries rebalanced away from name-specific deal framing.
+- llms.txt audience list and "Compared to" updated to reflect the cross-stage, cross-business-type scope. Added a "Visual model" section describing the hub-and-spoke shape.
+
+### Added
+- Mermaid `graph LR` diagram in the README showing the central business or individual node with orbiting data sources (email, calls and texts, calendar, CRM, documents, invoices, code, AI chat sessions). Renders natively on GitHub with an ASCII fallback inside a `<details>` block for environments that do not render Mermaid.
+
 ## [Unreleased] - 2026-06-01 (third pass)
 
 ### Changed
