@@ -198,6 +198,17 @@ g.write(
 
 Full reference: [docs.graphory.io/api](https://docs.graphory.io/api).
 
+## Teach your AI
+
+Graphory ships portable **skills** - drop-in instruction files any MCP-aware AI (Claude Code, Cursor, Claude Desktop, and others) picks up - so your agent knows how to use your graph well, not just call the API.
+
+- **save-to-graph** - capture any content (chat, transcript, article) as clean, linked memory: learn the schema, check what already exists, write only what is new.
+- **save-on-stop** - auto-save a working session when it ends, so the next session in any tool starts with context.
+- **morning-brief** - a daily situational brief assembled from your graph and rendered by your own AI.
+- **cleanup-stale** - keep the graph clean by adjudicating ambiguous matches, with you in the loop.
+
+Skills run entirely on your AI subscription: Graphory provides the data, your agent does the synthesis. Browse [`skills/`](skills/) and runnable [`examples/`](examples/).
+
 ## How it compares
 
 **Is Graphory like Mem0?**

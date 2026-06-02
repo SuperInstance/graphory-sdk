@@ -2,6 +2,16 @@
 
 All notable changes to the Graphory Python SDK are documented in this file.
 
+## [Unreleased] - 2026-06-02
+
+### Added
+- `skills/` directory: portable, MCP-based skill files any AI client can load. `save-to-graph` (the ingestion loop - learn the schema, dedupe, write only the delta, link to existing nodes), `save-on-stop` (session capture), `morning-brief` (daily brief), and `cleanup-stale` (review-queue hygiene), plus a `skills/README.md` index. Each runs on the user's own AI subscription at zero inference cost.
+- `examples/` directory: runnable Python over the SDK - `save_chat_session.py` (two-step conversation save) and `priority_brief.py` (cron-ready daily brief), with a README.
+- README "Teach your AI" section pointing at `skills/` and `examples/`.
+
+### Fixed
+- Reconciled published skill tool-call signatures with the live MCP server: `save_message` takes no `source` parameter, `get_latent_connections` requires an `entity_id`, `batch_merge_suggestions` takes `suggestion_ids`, and the suggestion `category` vocabulary matches the server (`merge_candidate`, `link_review`, `uncertain_relationship`, `incomplete_contact`, `unconnected_entity`).
+
 ## [Unreleased] - 2026-06-01 (fifth pass)
 
 ### Added
